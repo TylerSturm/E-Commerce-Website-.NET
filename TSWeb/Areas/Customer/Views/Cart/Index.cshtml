@@ -1,0 +1,131 @@
+﻿@model ShoppingCartVM
+@using TS.Models
+﻿
+<form method="post">
+    <br />
+    <div class="card shadow border-0">
+        <div class="card-header bg-secondary bg-dark text-yellow ml-0 py-4">
+            <div class="row px-4">
+                <div class="col-6">
+                    <h5 class="pt-2 text-yellow">
+                        Shopping Cart 
+                    </h5>
+                </div>
+                
+            </div>
+        </div>
+        <div class="card-body my-4">
+            <div class="row">
+            </div>
+            <div class="row mb-3 pb-3">
+                
+                <div class="col-md-10 offset-md-1">
+                    @if (Model.ShoppingCartList == null || !Model.ShoppingCartList.Any())
+                    {
+                        <div class="alert alert-warning text-center" role="alert">
+                            Your shopping cart is empty. Please add some items to your cart!
+                        </div>
+                        <div class="col-md-2 offset-md-5">
+                            <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-outline-primary bg-dark text-uppercase text-yellow mb-5 btn-sm"><small>Return to homepage</small></a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-2 offset-md-0">
+                            <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-outline-primary bg-dark text-uppercase text-yellow mb-5 btn-sm"><small>Continue Shopping</small></a>
+                        </div>
+                        foreach (var item in Model.ShoppingCartList)
+                        {
+                            <div class="row border-bottom pb-3">
+                                <div class="d-none d-lg-block col-lg-1 text-center py-2">
+                                    <img src="@item.Product.ImageUrl" class="rounded" width="100%" />
+                                </div>
+                                <div class="col-12 col-lg-6 pt-md-3">
+                                    <h5 class="text-uppercase text-secondary"><strong>@item.Product.Title</strong></h5>
+                                    <p><small>@Html.Raw(@item.Product.Description)</small></p>
+                                </div>
+                                <div class="col-12  col-lg-5 text-center row">
+                                    <div class="col-3 text-md-right pt-2 pt-md-4">
+                                        <h6 class="fw-semibold">
+                                            @item.Price.ToString("c")
+                                            <span class="text-muted">&nbsp;x&nbsp;</span>@item.Count
+                                        </h6>
+                                    </div>
+                                    <div class="col-6 col-sm-4 col-lg-6 pt-2">
+                                        <div class="w-75 btn-group" role="group">
+                                            <a asp-action="plus" asp-route-cartId="@item.Id" class="btn btn-dark btn-outline-primary bg-gradient text-yellow py-2">
+                                                +
+                                            </a> &nbsp;
+                                            <a asp-action="minus" asp-route-cartId="@item.Id" class="btn btn-dark btn-outline-primary bg-gradient text-yellow py-2">
+                                                -
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 col-sm-4 col-lg-2 offset-lg-1 text-right pt-2">
+                                        <a asp-action="remove" asp-route-cartId="@item.Id" class="btn btn-danger bg-gradient py-2 ">
+                                            Remove
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+
+                </div>
+            </div>
+            <div class="card-footer bg-dark border-0">
+                <div class="row">
+                    <div class="col-md-4 offset-md-4">
+                        <ul class="list-group mb-2">
+                            <li class="d-flex justify-content-between align-items-center">
+                                <h5 class="text-white fw-semibold text-uppercase"> Total (USD): </h5>
+                                <h4 class="text-white fw-bolder">@Model.OrderHeader.OrderTotal.ToString("c")</h4>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-primary text-yellow border-0 bg-gradient w-100 py-2" data-bs-toggle="modal" data-bs-target="#paymentModal">
+                        Proceed To Payment
+                    </button>
+                </div>
+
+                @if (Model.ShoppingCartList == null || !Model.ShoppingCartList.Any())
+                {
+                    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="paymentModalLabel"></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    Your shopping cart is empty. Please add some items to your cart!
+                                </div>
+                                <div class="modal-body">
+                                    <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-primary text-yellow w-100 my-2"><small>Return to homepage</small></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="paymentModalLabel">Select Payment Method</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <a asp-action="Summary" asp-route-paymentMethod="Card" class="btn btn-primary text-yellow w-100 my-2">Pay with Card</a>
+                                    <a asp-action="Summary" asp-route-paymentMethod="ACH" class="btn btn-primary text-yellow w-100 my-2">Pay with ACH</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+</form>

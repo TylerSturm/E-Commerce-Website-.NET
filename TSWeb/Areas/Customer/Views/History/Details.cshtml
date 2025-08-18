@@ -1,0 +1,49 @@
+﻿@model OrderDetailsVM
+
+<h2>Order Details - @Model.OrderHeader.Id</h2>
+
+<table class="table mt-3">
+    <tr>
+        <th>Order Date</th>
+        <td>@Model.OrderHeader.OrderDate.ToString("g")</td>
+    </tr>
+    <tr>
+        <th>Total Amount</th>
+        <td>@Model.OrderHeader.OrderTotal.ToString("C")</td>
+    </tr>
+    <tr>
+        <th>Payment Method</th>
+        <td>@Model.OrderHeader.paymentMethod</td>
+    </tr>
+    <tr>
+        <th>Order Status</th>
+        <td>@Model.OrderHeader.OrderStatus</td>
+    </tr>
+    <tr>
+        <th>Payment Status</th>
+        <td>@Model.OrderHeader.PaymentStatus</td>
+    </tr>
+</table>
+
+<h3>Order Items</h3>
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total</th> 
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var detail in Model.OrderDetails)
+        {
+            <tr>
+                <td>@detail.Product.Title</td> <!-- Assuming Product has a Title property -->
+                <td>@detail.Count</td>
+                <td>@detail.Price.ToString("C")</td>
+                <td>@((detail.Price * detail.Count).ToString("C"))</td>
+            </tr>
+        }
+    </tbody>
+</table>

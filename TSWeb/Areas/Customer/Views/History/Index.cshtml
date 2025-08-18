@@ -1,0 +1,70 @@
+﻿@model List<TS.Models.OrderHeader>
+
+<div class="card shadow border-0 my-4">
+    <div class="card-header bg-dark bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="text-yellow-solid col-12 text-center">
+                <h2 class="py-2">Your Orders</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row pb-3">
+            <div class="col-6">
+            </div>
+            <div class="col-6 text-end">
+            </div>
+        </div>
+
+        <form method="get" asp-action="Index" class="mb-3">
+            <div class="d-flex align-items-end">
+                <div class="form-group me-2">
+                    <label for="sortOrder">Sort By</label>
+                    <select id="sortOrder" name="sortOrder" class="form-control">
+                        <option value="">-- Select --</option>
+                        <option value="IdDecrease">Age (New to Old)</option>
+                        <option value="IdIncrease">Age (Old to New)</option>
+                        <option value="PriceIncrease">Price (Increasing)</option>
+                        <option value="PriceDecrease">Price (Decreasing)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+        </form>
+
+        <table class="table table-bordered table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Total Amount</th>
+                    <th>Order Status</th>
+                    <th>Payment Status</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.Id</td>
+                        <td>@order.OrderDate.ToString("g")</td>
+                        <td>@order.OrderTotal.ToString("C")</td>
+                        <td>@order.OrderStatus</td>
+                        <td>@order.PaymentStatus</td>
+                        <td>
+                            <a asp-action="Details" asp-controller="History" asp-route-id="@order.Id" class="btn btn-dark text-yellow">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    
+    <script src="~/js/order.js"></script> 
+}
