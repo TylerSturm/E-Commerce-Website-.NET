@@ -1,10 +1,6 @@
-# Tech Solution (TS) - E-Commerce Platform
+E-Commerce Platform
 
 A full-featured e-commerce web application built with ASP.NET Core 8 and Entity Framework Core. This platform provides a complete shopping experience with product management, shopping carts, order processing, and secure payment integration via Stripe.
-
-## Overview
-
-Tech Solution is a multi-tenant e-commerce platform designed for managing product catalogs, user orders, and payments. It supports multiple user roles including customers, employees, admins, and companies, with role-based access control throughout the application.
 
 ## Features
 
@@ -16,7 +12,7 @@ Tech Solution is a multi-tenant e-commerce platform designed for managing produc
 
 ### Product Management
 - **Product Catalog**: Browse and search products with detailed information
-- **Product Details**: ISBN, Author, Title, Description, and pricing information
+- **Product Details**: Title, Description, and pricing information
 - **Dynamic Pricing**: Support for list prices, discounts, and category pricing
 - **Image Management**: Product image storage and management
 
@@ -377,19 +373,3 @@ Potential improvements for the application:
 - Admin dashboard with analytics
 - API endpoints for mobile apps
 - Real-time order tracking
-
-## License
-
-[Specify your license here - e.g., MIT, Apache 2.0, etc.]
-
-## Contributing
-
-[Add contribution guidelines as needed]
-
-## Contact
-
-[Add contact information as needed]
-
----
-
-**Note**: This is a portfolio project demonstrating full-stack .NET development with modern ASP.NET Core practices, Entity Framework Core, authentication, and payment integration.
